@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b1020" />
+    <title>一人公司的 AI 成本副驾驶</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">◒</div>
+          <div>
+            <div class="brand-name">Cost Pilot</div>
+            <div class="brand-sub">一人公司的 AI 成本副驾驶</div>
+          </div>
+        </div>
+
+        <nav class="nav" aria-label="主导航">
+          <button class="nav-item active" data-target="workbench"><span>✦</span> 今日工作</button>
+          <button class="nav-item" data-target="plans"><span>◈</span> 成本方案</button>
+          <button class="nav-item" data-target="profile"><span>◌</span> 工作画像</button>
+          <button class="nav-item" data-target="settings"><span>⚙</span> 参数设置</button>
+        </nav>
+
+        <div class="sidebar-footer">
+          <div class="privacy-note">
+            <span class="status-dot"></span>
+            <div>
+              <strong>本地优先</strong>
+              <p>记录只保存在当前设备</p>
+            </div>
+          </div>
+          <button class="text-button" id="clearData">清空本地记录</button>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <div class="eyebrow">星期日 · 2026.09.06</div>
+            <h1>今天，把算力花在真正重要的地方。</h1>
+          </div>
+          <div class="top-actions">
+            <span class="sync-pill"><span class="status-dot"></span> 本地已保存</span>
+            <button class="outline-button" id="exportData">导出记录</button>
+          </div>
+        </header>
+
+        <section class="hero-grid" id="workbench">
+          <div class="panel input-panel">
+            <div class="panel-head">
+              <div>
+                <span class="section-kicker">01 · 今天的工作</span>
+                <h2>把你在 Codex 里做的事贴进来</h2>
+              </div>
+              <span class="demo-badge">当前为示例内容</span>
+            </div>
+            <p class="muted">工具会从工作内容里判断场景，再给你一套可执行的模型和成本组合。每次更新都会进入你的工作画像。</p>
+            <label class="sr-only" for="workInput">今天的工作内容</label>
+            <textarea id="workInput" rows="9" placeholder="例如：今天写了一个短视频脚本，调研了抖音上高互动的一人公司内容，晚上又想把成本测算器做成一个小工具……"></textarea>
+            <div class="input-footer">
+              <span id="charCount">0 字</span>
+              <div class="input-actions">
+                <button class="ghost-button" id="loadSample">填入我的当前样例</button>
+                <button class="primary-button" id="analyzeButton">分析并更新方案 <span>→</span></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel recommendation-panel" id="recommendationPanel">
+            <div class="panel-head compact">
+              <span class="section-kicker">02 · 当前判断</span>
+              <span class="confidence" id="confidence">置信度 86%</span>
+            </div>
+            <div class="recommendation-icon">↗</div>
+            <div class="recommendation-label">今天建议</div>
+            <h2 id="recommendationTitle">Luna 主力 + 强模型做最后验收</h2>
+            <p id="recommendationReason">你今天同时涉及运营调研和小工具构建。日常整理、脚本与搜索下沉到 Luna；架构、交互和交付前检查再调用更强模型。</p>
+            <div class="detected-row" id="detectedScenarios"></div>
+            <div class="recommendation-footer">
+              <div>
+                <span class="muted small">预计今天 AI 成本</span>
+                <strong id="todayCost">¥18.60</strong>
+              </div>
+              <button class="link-button" data-target="plans">查看三套方案 →</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-block" id="plans">
+          <div class="section-title-row">
+            <div>
+              <span class="section-kicker">03 · 不是选最强，而是选刚好够用</span>
+              <h2>按今天的工作场景给你三种花法</h2>
+            </div>
+            <div class="scenario-summary" id="scenarioSummary">识别中 · 运营 / 调研 / 构建</div>
+          </div>
+          <div class="plan-grid" id="planGrid"></div>
+        </section>
+
+        <section class="dashboard-grid">
+          <div class="panel breakdown-panel">
+            <div class="panel-head compact">
+              <div>
+                <span class="section-kicker">04 · 一人公司的真实成本</span>
+                <h2>现金成本只是第一层</h2>
+              </div>
+              <button class="mini-button" data-target="settings">调整参数</button>
+            </div>
+            <div class="cost-total-row">
+              <div>
+                <span class="muted small">本月预测现金成本</span>
+                <strong id="monthlyCashCost">¥2,186</strong>
+              </div>
+              <div class="total-divider"></div>
+              <div>
+                <span class="muted small">含时间价值的全成本</span>
+                <strong class="accent-number" id="monthlyFullCost">¥14,506</strong>
+              </div>
+            </div>
+            <div class="bar-list" id="barList"></div>
+            <div class="legend-note"><span class="legend-dot ai"></span> AI 模型 <span class="legend-dot ops"></span> 素材 / 推广 / 软件 <span class="legend-dot time"></span> 你的时间</div>
+          </div>
+
+          <div class="panel pulse-panel" id="profile">
+            <div class="panel-head compact">
+              <div>
+                <span class="section-kicker">05 · 工作画像</span>
+                <h2>最近的你，主要在做什么</h2>
+              </div>
+              <span class="trend-label" id="trendLabel">实时更新</span>
+            </div>
+            <div class="profile-main">
+              <div class="donut" id="donut"><div><strong id="dominantPercent">52%</strong><span>主场景</span></div></div>
+              <div class="profile-copy">
+                <strong id="dominantScenario">运营与内容</strong>
+                <p id="profileDescription">你更适合把便宜模型当成日常生产力，把高阶模型留给最终判断。</p>
+              </div>
+            </div>
+            <div class="profile-tags" id="profileTags"></div>
+            <div class="history-strip" id="historyStrip"></div>
+          </div>
+        </section>
+
+        <section class="panel updates-panel">
+          <div class="panel-head compact">
+            <div>
+              <span class="section-kicker">06 · 每次使用都会变</span>
+              <h2>你的成本方案不是一次性结论</h2>
+            </div>
+            <span class="muted small" id="updateCount">已记录 0 次更新</span>
+          </div>
+          <div class="updates-list" id="updatesList"></div>
+        </section>
+
+        <section class="settings-section" id="settings">
+          <div class="section-title-row">
+            <div>
+              <span class="section-kicker">07 · 可编辑的假设</span>
+              <h2>把模型价格和你的业务成本改成真实数字</h2>
+            </div>
+            <span class="muted small">示例值仅用于演示，不代表任何官方计费</span>
+          </div>
+          <div class="settings-grid">
+            <div class="panel settings-panel">
+              <div class="panel-head compact"><h3>模型成本档位</h3><span class="muted small">每次任务估算 ¥</span></div>
+              <div class="model-table" id="modelTable"></div>
+            </div>
+            <div class="panel settings-panel">
+              <div class="panel-head compact"><h3>业务成本假设</h3><span class="muted small">按月预测</span></div>
+              <div class="field-grid">
+                <label>每月工作天数<input type="number" min="1" max="31" data-setting="workDays" /></label>
+                <label>每天 AI 任务数<input type="number" min="1" max="50" data-setting="tasksPerDay" /></label>
+                <label>每月素材成本<input type="number" min="0" data-setting="assetCost" /></label>
+                <label>每月推广成本<input type="number" min="0" data-setting="promotionCost" /></label>
+                <label>每月软件订阅<input type="number" min="0" data-setting="softwareCost" /></label>
+                <label>你的时间价值 / 小时<input type="number" min="0" data-setting="hourlyValue" /></label>
+              </div>
+              <div class="setting-footnote">全成本会把“如果这段时间不用来做这件事，本来可以创造的价值”单独算出来。</div>
+            </div>
+          </div>
+        </section>
+
+        <footer class="footer-note">Cost Pilot v0.1 · 本地分析优先 · 你可以先用 7 天，再决定要不要接入真实 Codex 会话</footer>
+      </main>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
